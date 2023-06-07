@@ -4,7 +4,7 @@ AnimeWatch360 is a command-line application that allows users to manage and trac
 Usage
 To launch the AnimeWatch360 application, run the following command in the terminal:
 
-python app.py
+python cli.py
 The main menu will be displayed, presenting various options for interacting with the application. Simply enter the corresponding number to select an option.
 
 Features

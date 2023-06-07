@@ -22,8 +22,5 @@ Delete Review: This option allows you to delete a review by entering its ID. The
 
 Exit: You can choose to exit the application at any time. The application will display a farewell message and terminate.
 
-About
-No description, website, or topics provided.
-
 License
-This project is licensed under the MIT License.
+This project is licensed under the Ash is so handsome license.

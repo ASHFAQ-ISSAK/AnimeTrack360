@@ -1,4 +1,14 @@
 from models.models import Review, User, Anime, session
+import click
+
+def error(text):
+    click.echo(click.style(text, fg='red', bold=True))
+
+def success(text):
+    click.echo(click.style(text, fg='green', bold=True))
+
+def styles(text, color='blue'):
+    click.echo(click.style(text, fg=color, dim=True))
 
 class Crud:
 
@@ -64,9 +74,9 @@ class Crud:
         if review:
             session.delete(review)
             session.commit()
-            print("Review deleted successfully!")
+            success("Review deleted successfully!")
         else:
-            print("Review not found.")
+            error("Review not found.")
 
     @staticmethod
     def delete_anime():
@@ -77,9 +87,9 @@ class Crud:
         if anime:
             session.delete(anime)
             session.commit()
-            print("Anime deleted successfully!")
+            success("Anime deleted successfully!")
         else:
-            print("Anime not found.")
+            error("Anime not found.")
 
     @staticmethod
     def update_anime():
@@ -93,29 +103,36 @@ class Crud:
             anime.title = new_title
             anime.description = new_description
             session.commit()
-            print("Anime updated successfully!")
+            success("Anime updated successfully!")
         else:
-            print("Anime not found.")
+            error("Anime not found.")
 
     @staticmethod
     def get_all():
         animes = session.query(Anime).all()
-        for anime in animes:
-            print(f"Anime: {anime.title}, Episode Count: {anime.episode_count}")
+        if animes:
+            i = 1
+            click.echo(click.style('Here\'s the list of all animes', fg='green', dim=True, underline=True))
+            for anime in animes:
+                styles(f"{i}. Anime: {anime.title}, Episode Count: {anime.episode_count}")
+                i += 1
+        else:
+            error('No animes available')
 
     @staticmethod
     def get_anime_details():
-        id = int(input("Enter Anime ID: "))
+        # choice = click.prompt(click.style("Enter your choice ", fg='green', bold=True))
+        id = int(click.prompt(click.style("Enter Anime ID: ", fg='yellow', bold=True)))
         anime = session.query(Anime).get(id)
 
         if anime:
-            print(f"Title: {anime.title}")
-            print(f"Description: {anime.description}")
-            print(f"Genre: {anime.genre}")
-            print(f"Episode Count: {anime.episode_count}")
-            print(f"Status: {anime.status}")
-            print(f"Watched: {anime.watched}")
+            styles(f"=> Title: {anime.title}")
+            styles(f"=> Description: {anime.description}")
+            styles(f"=> Genre: {anime.genre}")
+            styles(f"=> Episode Count: {anime.episode_count}")
+            styles(f"=> Status: {anime.status}")
+            styles(f"=> Watched: {anime.watched}")
         else:
-            print("Anime not found.")
+            error("Anime not found.")
 
 

@@ -30,7 +30,7 @@ class Anime(Base):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer(), primary_key=True)
-    susername = Column(String())
+    username = Column(String())
     email = Column(String())
     favorite_anime = Column(String())
 

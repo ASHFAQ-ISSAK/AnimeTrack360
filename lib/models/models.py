@@ -38,7 +38,9 @@ class User(Base):
 
 
 # user has many anime
-    anime_id = relationship(Integer, ForeignKey('animes.id'))
+    animes = relationship(Integer, ForeignKey('animes.id'))
+
+
 
 
 class Review(Base):

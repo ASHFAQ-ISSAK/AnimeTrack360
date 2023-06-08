@@ -9,47 +9,42 @@ session = Session()
 
 
 class Anime(Base):
-
     __tablename__ = 'animes'
-
     id = Column(Integer, primary_key=True)
     title = Column(String)
     description = Column(String)
     genre = Column(String)
-    episode_count = (Integer)
-    watched = Column(Boolean)
+    episode_count = Column(Integer)
     status = Column(String)
+    watched = Column(Boolean)
 
-    reviews = relationship('Review', backpopulates='animes')
-    users = relationship('Users', backpopulates='animes')
-
-# anime has many users
-# anime has many reviews
+    # Specify the back_populates parameter to resolve the conflicts
+    users = relationship('User', back_populates='favorite_anime')
+    reviews = relationship('Review', back_populates='anime')
 
 
 class User(Base):
     __tablename__ = 'users'
-
     id = Column(Integer, primary_key=True)
     username = Column(String)
     email = Column(String)
-    favorite_anime = Column(String)
+    favorite_anime_id = Column(Integer, ForeignKey('animes.id'))
 
-
-
-# user has many anime
-    animes = relationship(Integer, ForeignKey('animes.id'))
-
-
+    # Specify the back_populates parameter to resolve the conflicts
+    favorite_anime = relationship('Anime', back_populates='users')
+    reviews = relationship('Review', back_populates='user')
 
 
 class Review(Base):
     __tablename__ = 'reviews'
-
     id = Column(Integer, primary_key=True)
-    rating = Column(String)
+    rating = Column(Integer)
     comment = Column(String)
-# reviews belong to many users
+    anime_id = Column(Integer, ForeignKey('animes.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
 
-    anime_id = relationship(Integer, ForeignKey('animes.id'))
-    user_id = relationship(Integer, ForeignKey('users.id'))
+    # Specify the back_populates parameter to resolve the conflicts
+    anime = relationship('Anime', back_populates='reviews')
+    user = relationship('User', back_populates='reviews')
+
+Base.metadata.create_all(engine)

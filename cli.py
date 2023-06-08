@@ -5,16 +5,9 @@ from anime import Anime
 from review import Review
 import pyfiglet
 from colorama import init, Fore
-import click
 
+color = 'green'
 
-def show(text_array):
-        for text in text_array:
-            click.echo(click.style(text, fg='bright_magenta', bold=True ))
-
-def error(text):
-    click.echo(click.style(text, fg='red', bold=True))
-    
 
 class CLI:
     def __init__(self):
@@ -28,9 +21,13 @@ class CLI:
         art = pyfiglet.figlet_format(text, width=150)
         colored_art = color + art
         print(colored_art)
-        options = ['1. Browse Anime', '2. View Anime Details', '3. Add Anime', '4. Delete Anime',
-                '5. Add Review', '6. Delete Review', '7. Exit']
-        show(options)
+        print("1. Browse Anime")
+        print("2. View Anime Details")
+        print("3. Add Anime")
+        print("4. Delete Anime")
+        print("5. Add Review")
+        print("6. Delete Review")
+        print("7. Exit")
 
     def browse_anime(self):
         print("-------------------------------------")
@@ -48,8 +45,7 @@ class CLI:
                 anime = Anime(*anime_record)
                 print(f"{anime.anime_id}. {anime.title}")
         else:
-            error('No anime available')
-            # print("No anime available.")
+            print("No anime available.")
 
     def view_anime_details(self):
         print("-------------------------------------")
@@ -67,8 +63,7 @@ class CLI:
             anime = Anime(*anime_record)
             anime.get_anime_details()
         else:
-            error('Anime not found')
-            # print("Anime not found.")
+            print("Anime not found.")
 
     def add_anime(self):
         print("-------------------------------------")
@@ -127,7 +122,7 @@ class CLI:
     def run(self):
         while True:
             self.show_menu()
-            choice = click.prompt(click.style("Enter your choice ", fg='green', bold=True))
+            choice = input("Enter your choice: ")
 
             if choice == "1":
                 self.browse_anime()
@@ -145,7 +140,7 @@ class CLI:
                 self.exit_program()
                 break
             else:
-                error("Invalid choice. Please try again.")
+                print("Invalid choice. Please try again.")
 
 
 cli = CLI()

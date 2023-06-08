@@ -12,13 +12,13 @@ class Anime(Base):
 
     __tablename__ = 'animes'
 
-    id = Column(Integer(), primary_key=True)
-    title = Column(String())
-    description = Column(String())
-    genre = Column(String())
-    episode_count = (Integer())
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    description = Column(String)
+    genre = Column(String)
+    episode_count = (Integer)
     watched = Column(Boolean)
-    status = Column(String())
+    status = Column(String)
 
     reviews = relationship('Review', backpopulates='animes')
     users = relationship('Users', backpopulates='animes')
@@ -29,24 +29,25 @@ class Anime(Base):
 
 class User(Base):
     __tablename__ = 'users'
-    id = Column(Integer(), primary_key=True)
-    username = Column(String())
-    email = Column(String())
-    favorite_anime = Column(String())
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String)
+    email = Column(String)
+    favorite_anime = Column(String)
+
 
 
 # user has many anime
-    anime_id = relationship(Integer(), ForeignKey('animes.id'))
+    anime_id = relationship(Integer, ForeignKey('animes.id'))
 
 
 class Review(Base):
     __tablename__ = 'reviews'
 
-    id = Column(Integer(),primary_key=True)
-    
-    rating = Column(String())
-    comment = Column(String())
+    id = Column(Integer, primary_key=True)
+    rating = Column(String)
+    comment = Column(String)
 # reviews belong to many users
-    
-    anime_id = relationship(Integer(),ForeignKey('animes.id'))
-    user_id=relationship(Integer(),ForeignKey('users.id'))
+
+    anime_id = relationship(Integer, ForeignKey('animes.id'))
+    user_id = relationship(Integer, ForeignKey('users.id'))

@@ -1,6 +1,5 @@
 from models.models import Review, User, Anime, session
 
-
 class Crud:
 
     def add_anime():
@@ -59,3 +58,4 @@ class Crud:
             print("Anime updated successfully!")
         else:
             print("Anime not found.")
+

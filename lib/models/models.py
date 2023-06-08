@@ -41,6 +41,8 @@ class User(Base):
     animes = relationship(Integer, ForeignKey('animes.id'))
 
 
+
+
 class Review(Base):
     __tablename__ = 'reviews'
 

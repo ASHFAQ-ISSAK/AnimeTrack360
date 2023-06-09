@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 cli-color-py = "*"
+pyfiglet = "*"
+colorama = "*"
+sqlalchemy = "*"
+click = "*"
+faker = "*"
 
 [dev-packages]
 

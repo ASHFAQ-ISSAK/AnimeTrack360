@@ -10,7 +10,7 @@ logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
 
 Base = declarative_base()
-engine = create_engine('sqlite:///anime.db', echo=True)
+engine = create_engine('sqlite:///anime.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 

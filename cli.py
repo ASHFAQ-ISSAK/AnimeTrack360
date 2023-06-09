@@ -1,7 +1,10 @@
+#! /usr/bin/env/ python3 
+
 from database import Database
 from anime import Anime
 from review import Review
 from colorama import Fore, init
+
 
 
 class CLI:
@@ -18,6 +21,7 @@ class CLI:
         print(f"{Fore.GREEN}5. Add Review")
         print(f"{Fore.GREEN}6. Delete Review")
         print(f"{Fore.GREEN}7. Exit")
+
 
     def browse_anime(self):
         print("-------------------------------------")

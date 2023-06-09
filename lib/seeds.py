@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # session.query(anime_users).delete()
 
     faker = Faker()
-    faker.seed(1)
+    Faker.seed(1)
 
     GENRES = [
     "Action","Adventure","Comedy","Drama","Fantasy","Romance","Slice of Life","Supernatural","Mystery","Thriller",

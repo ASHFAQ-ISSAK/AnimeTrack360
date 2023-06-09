@@ -1,6 +1,13 @@
+import os
+import sqlalchemy as sa
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import logging
+
+# Set the logging level to suppress SQLAlchemy logs
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
+logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
 
 Base = declarative_base()
 engine = create_engine('sqlite:///anime.db', echo=True)
@@ -8,6 +15,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
+
+# Disable SQLAlchemy logging
+logging.getLogger(sa.__name__).setLevel(logging.ERROR)
 class Anime(Base):
     __tablename__ = 'animes'
     id = Column(Integer, primary_key=True)

@@ -1,4 +1,7 @@
-#! /usr/bin/env/ python3 
+import sqlalchemy as sa
+from cli_color_py import red, bright_yellow, green, bold,bright_magenta
+
+from app import Crud
 
 import pyfiglet
 from colorama import init, Fore
@@ -7,10 +10,11 @@ from styles import Styles
 import click
 
 
-class CLI:
 
+class CLI:
     def show_menu(self):
         print("-------------------------------------")
+
         options = ['1. Browse Anime', '2. View Anime Details', '3. Add Anime', '4. Delete Anime',
                 '5. Add Review', '6. Delete Review', '7. Update Anime', '8. Exit']
         Styles.show(options)
@@ -32,6 +36,7 @@ class CLI:
         print("-------------------------------------")
         # Add a new anime to the database
         Crud.add_anime()
+
         Styles.success("Anime added successfully.")
 
 
@@ -45,6 +50,7 @@ class CLI:
         print("-------------------------------------")
         # Add a new review to the database
         Crud.add_review()
+
         Styles.success("Review added successfully.")
 
 
@@ -54,10 +60,23 @@ class CLI:
         Crud.delete_review()
 
 
+
     def update_anime(self):
         print("-------------------------------------")
         # Update an existing anime in the database
         Crud.update_anime()
+
+    def run_all_methods_in_crud(self):
+        print("-------------------------------------")
+        # Run all methods in the Crud class
+        Crud.get_all()
+        Crud.get_anime_details()
+        Crud.add_anime()
+        Crud.delete_anime()
+        Crud.add_review()
+        Crud.delete_review()
+        Crud.update_anime()
+        print(Color.GREEN + "All methods in Crud executed successfully." + Color.END)
 
 
     def exit_program(self):
@@ -87,6 +106,8 @@ class CLI:
             elif choice == "7":
                 self.update_anime()
             elif choice == "8":
+                self.run_all_methods_in_crud()
+            elif choice == "9":
                 self.exit_program()
                 break
             else:
@@ -102,4 +123,3 @@ if __name__ == "__main__":
     click.echo(click.style(colored_art))
     cli = CLI()
     cli.run()
-

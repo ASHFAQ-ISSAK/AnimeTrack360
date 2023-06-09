@@ -3,10 +3,8 @@
 from database import Database
 from anime import Anime
 from review import Review
-import pyfiglet
-from colorama import init, Fore
+from colorama import Fore, init
 
-color = 'green'
 
 
 class CLI:
@@ -15,23 +13,18 @@ class CLI:
 
     def show_menu(self):
         print("-------------------------------------")
-        init(autoreset=True)
-        text = 'Welcome to AnimeWatch360'
-        color = Fore.CYAN
-        art = pyfiglet.figlet_format(text, width=150)
-        colored_art = color + art
-        print(colored_art)
-        print("1. Browse Anime")
-        print("2. View Anime Details")
-        print("3. Add Anime")
-        print("4. Delete Anime")
-        print("5. Add Review")
-        print("6. Delete Review")
-        print("7. Exit")
+        print(f"{Fore.WHITE}Welcome to AnimeWatch360!")
+        print(f"{Fore.GREEN}1. Browse Anime")
+        print(f"{Fore.GREEN}2. View Anime Details")
+        print(f"{Fore.GREEN}3. Add Anime")
+        print(f"{Fore.GREEN}4. Delete Anime")
+        print(f"{Fore.GREEN}5. Add Review")
+        print(f"{Fore.GREEN}6. Delete Review")
+        print(f"{Fore.GREEN}7. Exit")
+
 
     def browse_anime(self):
         print("-------------------------------------")
-        # Browse available anime
         self.database.connect()
         query = "SELECT * FROM anime"
         cursor = self.database.connection.cursor()
@@ -40,17 +33,16 @@ class CLI:
         self.database.disconnect()
 
         if len(anime_records) > 0:
-            print("Available Anime:")
+            print(f"{Fore.YELLOW}Available Anime:")
             for anime_record in anime_records:
                 anime = Anime(*anime_record)
                 print(f"{anime.anime_id}. {anime.title}")
         else:
-            print("No anime available.")
+            print(f"{Fore.YELLOW}No anime available.")
 
     def view_anime_details(self):
         print("-------------------------------------")
-        # View details of a specific anime
-        anime_id = int(input("Enter the anime ID: "))
+        anime_id = int(input(f"{Fore.CYAN}Enter the anime ID: "))
 
         self.database.connect()
         query = f"SELECT * FROM anime WHERE anime_id = {anime_id}"
@@ -63,66 +55,64 @@ class CLI:
             anime = Anime(*anime_record)
             anime.get_anime_details()
         else:
-            print("Anime not found.")
+            print(f"{Fore.RED}Anime not found.")
 
     def add_anime(self):
         print("-------------------------------------")
-        # Add a new anime to the database
-        title = input("Enter the title of the anime: ")
-        description = input("Enter the description of the anime: ")
-        genre = input("Enter the genre of the anime: ")
-        episode_count = int(input("Enter the episode count of the anime: "))
-        status = input("Enter the status of the anime: ")
+        title = input(f"{Fore.MAGENTA}Enter the title of the anime: ")
+        description = input(f"{Fore.MAGENTA}Enter the description of the anime: ")
+        genre = input(f"{Fore.MAGENTA}Enter the genre of the anime: ")
+        episode_count = int(
+            input(f"{Fore.MAGENTA}Enter the episode count of the anime: ")
+        )
+        status = input(f"{Fore.MAGENTA}Enter the status of the anime: ")
 
         self.database.connect()
         self.database.add_anime(title, description, genre, episode_count, status)
         self.database.disconnect()
 
-        print("Anime added successfully.")
+        print(f"{Fore.GREEN}Anime added successfully.")
 
     def delete_anime(self):
         print("-------------------------------------")
-        # Delete an anime from the database
-        anime_id = int(input("Enter the anime ID to delete: "))
+        anime_id = int(input(f"{Fore.RED}Enter the anime ID to delete: "))
 
         self.database.connect()
         self.database.delete_anime(anime_id)
         self.database.disconnect()
 
-        print("Anime deleted successfully.")
+        print(f"{Fore.YELLOW}Anime deleted successfully.")
 
     def add_review(self):
         print("-------------------------------------")
-        # Add a new review to the database
-        anime_id = int(input("Enter the anime ID: "))
-        rating = int(input("Enter your rating for the anime (1-5): "))
-        comment = input("Enter your review comment: ")
+        anime_id = int(input(f"{Fore.CYAN}Enter the anime ID: "))
+        rating = int(input(f"{Fore.CYAN}Enter your rating for the anime (1-5): "))
+        comment = input(f"{Fore.CYAN}Enter your review comment: ")
 
         self.database.connect()
         self.database.add_review(anime_id, rating, comment)
         self.database.disconnect()
 
-        print("Review added successfully.")
+        print(f"{Fore.GREEN}Review added successfully.")
 
     def delete_review(self):
         print("-------------------------------------")
-        # Delete a review from the database
-        review_id = int(input("Enter the review ID to delete: "))
+        review_id = int(input(f"{Fore.RED}Enter the review ID to delete: "))
 
         self.database.connect()
         self.database.delete_review(review_id)
         self.database.disconnect()
 
-        print("Review deleted successfully.")
+        print(f"{Fore.YELLOW}Review deleted successfully.")
 
     def exit_program(self):
-        print("Thank you for using AnimeWatch360. Goodbye!")
+        print(f"{Fore.WHITE}Thank you for using AnimeWatch360. Goodbye!")
         print("-------------------------------------")
 
     def run(self):
         while True:
             self.show_menu()
-            choice = input("Enter your choice: ")
+            choice = input(f"{Fore.WHITE}Enter your choice: ")
 
             if choice == "1":
                 self.browse_anime()
@@ -140,8 +130,9 @@ class CLI:
                 self.exit_program()
                 break
             else:
-                print("Invalid choice. Please try again.")
+                print(f"{Fore.RED}Invalid choice. Please try again.")
 
 
+init()
 cli = CLI()
 cli.run()

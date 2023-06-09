@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+cli-color-py = "*"
 pyfiglet = "*"
 colorama = "*"
 sqlalchemy = "*"
@@ -14,4 +15,3 @@ faker = "*"
 
 [requires]
 python_version = "3.10"
-python_full_version = "3.10.6"

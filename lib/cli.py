@@ -125,6 +125,12 @@ class CLI:
 
     def run(self):
         while True:
+            init(autoreset=True)
+            color = Fore.CYAN
+            text = 'AnimeWatch360!'
+            art = pyfiglet.figlet_format(text, width=100)
+            art_colored = color + art
+            click.echo(click.style(art_colored, blink=True))
             self.show_menu()
             choice = Styles.main_inputs("Enter your choice")
 
@@ -170,7 +176,7 @@ class CLI:
 if __name__ == "__main__":
     init(autoreset=True)
     color = Fore.CYAN
-    text = 'Welcome to AnimeWatch360'
+    text = 'Welcome to AnimeWatch360!'
     art = pyfiglet.figlet_format(text, width=150)
     colored_art = color + art
     click.echo(click.style(colored_art))

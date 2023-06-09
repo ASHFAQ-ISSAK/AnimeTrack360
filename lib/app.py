@@ -35,7 +35,7 @@ class Crud:
         )
         session.add(anime)
         session.commit()
-        print("Anime added successfully!")
+        Styles.success("Anime added successfully!")
 
 
     @staticmethod
@@ -52,7 +52,7 @@ class Crud:
         )
         session.add(user)
         session.commit()
-        print("User added successfully!")
+        Styles.success("User added successfully!")
 
 
     @staticmethod
@@ -71,7 +71,18 @@ class Crud:
         )
         session.add(review)
         session.commit()
-        print("Review added successfully!")
+        Styles.success("Review added successfully!")
+
+    @staticmethod
+    def delete_user():
+        user_id = int(Styles.inputs('Enter User ID to delete: '))
+        user = session.query(User).get(user_id)
+        if user:
+            session.delete(user)
+            session.commit()
+            Styles.success('User deleted successfully')
+        else:
+            Styles.inputs('No user has the provided ID')
 
 
     @staticmethod
@@ -153,32 +164,32 @@ class Crud:
     def get_anime_count():
         # Get the total count of anime in the database
         count = session.query(func.count(Anime.id)).scalar()
-        print(f"Total Anime Count: {count}")
+        Styles.mod_styles(f"Total Anime Count: {count}")
 
     @staticmethod
     def get_average_episode_count():
         # Get the average episode count of all anime
         average_count = session.query(func.avg(Anime.episode_count)).scalar()
-        print(f"Average Episode Count: {average_count}")
+        Styles.mod_styles(f"Average Episode Count: {average_count}")
 
     @staticmethod
     def get_max_episode_count():
         # Get the maximum episode count among all anime
         max_count = session.query(func.max(Anime.episode_count)).scalar()
-        print(f"Maximum Episode Count: {max_count}")
+        Styles.mod_styles(f"Maximum Episode Count: {max_count}")
 
     @staticmethod
     def get_min_episode_count():
         # Get the minimum episode count among all anime
         min_count = session.query(func.min(Anime.episode_count)).scalar()
-        print(f"Minimum Episode Count: {min_count}")
+        Styles.mod_styles(f"Minimum Episode Count: {min_count}")
 
     @staticmethod
     def get_total_watched_anime_count():
         # Get the total count of watched anime
         count = session.query(func.count(Anime.id)).filter(
             Anime.watched == True).scalar()
-        print(f"Total Watched Anime Count: {count}")
+        Styles.mod_styles(f"The Total Watched Anime Count: {count}")
 
     @staticmethod
     def get_genre_counts():
@@ -186,7 +197,7 @@ class Crud:
         genre_counts = session.query(Anime.genre, func.count(
             Anime.id)).group_by(Anime.genre).all()
         for genre, count in genre_counts:
-            print(f"Genre: {genre}, Count: {count}")
+            Styles.mod_styles(f"Genre: {genre}, Total Included Anime Count: {count}")
 
     @staticmethod
     def get_top_rated_anime():
@@ -200,7 +211,7 @@ class Crud:
             .all()
         )
         for title, rating in top_rated:
-            print(f"Anime: {title}, Average Rating: {rating:.2f}")
+            Styles.mod_styles(f"Anime: {title}, Average Rating: {rating:.2f}")
 
     @staticmethod
     def get_anime_with_most_reviews():
@@ -214,9 +225,9 @@ class Crud:
         )
         if most_reviews:
             title, review_count = most_reviews
-            print(f"Anime: {title}, Review Count: {review_count}")
+            Styles.mod_styles(f"Anime: {title}, Review Count: {review_count}")
         else:
-            print("No anime found.")
+            Styles.error("No anime found.")
 
     @staticmethod
     def get_users_with_multiple_reviews():
@@ -229,7 +240,7 @@ class Crud:
             .all()
         )
         for username, review_count in users:
-            print(f"User: {username}, Review Count: {review_count}")
+            Styles.mod_styles(f"User: {username}, Review Count: {review_count}")
 
     @staticmethod
     def get_anime_with_most_episodes():
@@ -237,32 +248,35 @@ class Crud:
         anime = session.query(Anime).order_by(
             Anime.episode_count.desc()).first()
         if anime:
-            print(
+            Styles.mod_styles(
                 f"Anime with Most Episodes: {anime.title}, Episode Count: {anime.episode_count}")
         else:
-            print("No anime found.")
+            Styles.error("No anime found.")
 
     @staticmethod
-    def get_average_rating_for_anime(anime_id):
+    def get_average_rating_for_anime():
         # Get the average rating for a specific anime
+        anime_id = int(Styles.inputs('Enter Anime Id: '))
         average_rating = session.query(func.avg(Review.rating)).filter(
             Review.anime_id == anime_id).scalar()
-        print(f"Average Rating for Anime ID {anime_id}: {average_rating:.2f}")
+        Styles.mod_styles(f"Average Rating for Anime ID {anime_id}: {average_rating:.2f}")
 
     @staticmethod
-    def get_user_favorite_anime_count(user_id):
+    def get_user_favorite_anime_count():
         # Get the count of favorite anime for a specific user
+        user_id = int(Styles.inputs('Enter User id: '))
         favorite_anime_count = session.query(func.count(
             User.favorite_anime_id)).filter(User.id == user_id).scalar()
-        print(
+        Styles.mod_styles(
             f"Favorite Anime Count for User ID {user_id}: {favorite_anime_count}")
 
     @staticmethod
-    def get_anime_by_genre(genre):
+    def get_anime_by_genre():
         # Get all anime of a specific genre
+        genre = Styles.inputs('Enter Genre: ')
         anime_list = session.query(Anime).filter(Anime.genre == genre).all()
         for anime in anime_list:
-            print(f"Anime: {anime.title}, Genre: {anime.genre}")
+            Styles.mod_styles(f"Anime: {anime.title}, Genre: {anime.genre}")
 
     @staticmethod
     def get_anime_watched_status_count():
@@ -273,4 +287,4 @@ class Crud:
             .all()
         )
         for status, count in status_counts:
-            print(f"Status: {status}, Count: {count}")
+            Styles.mod_styles(f"Status: {status},Watch Count: {count}")

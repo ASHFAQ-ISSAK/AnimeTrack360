@@ -15,8 +15,10 @@ class CLI:
     def show_menu(self):
         print("-------------------------------------")
 
-        options = ['1. Browse Anime', '2. View Anime Details', '3. Add Anime', '4. Delete Anime',
-                '5. Add Review', '6. Delete Review', '7. Update Anime', '8. Exit']
+        options = ['1. Browse Anime', '2. View Anime Details', '3. Add Anime', '4. Delete Anime', '5. Add User',
+                '6. Delete User', '7. Add Review', '8. Delete Review', '9. Update Anime','10. See Total Anime Count',
+                '11. Total Watched Anime','12. Genre List','13. Get Top Rated Animes', '14. Average Rating For an Anime', 
+                '15. Filter Anime By Genre', '16. Anime Watch Status', '17. Exit']
         Styles.show(options)
 
 
@@ -37,8 +39,6 @@ class CLI:
         # Add a new anime to the database
         Crud.add_anime()
 
-        Styles.success("Anime added successfully.")
-
 
     def delete_anime(self):
         print("-------------------------------------")
@@ -46,12 +46,18 @@ class CLI:
         Crud.delete_anime()
 
 
+    def add_user(self):
+        Crud.add_user()
+
+
+    def delete_user(self):
+        Crud.delete_user()
+
+
     def add_review(self):
         print("-------------------------------------")
         # Add a new review to the database
         Crud.add_review()
-
-        Styles.success("Review added successfully.")
 
 
     def delete_review(self):
@@ -60,23 +66,54 @@ class CLI:
         Crud.delete_review()
 
 
-
     def update_anime(self):
         print("-------------------------------------")
         # Update an existing anime in the database
         Crud.update_anime()
 
-    def run_all_methods_in_crud(self):
+
+    def get_anime_count(self):
         print("-------------------------------------")
-        # Run all methods in the Crud class
-        Crud.get_all()
-        Crud.get_anime_details()
-        Crud.add_anime()
-        Crud.delete_anime()
-        Crud.add_review()
-        Crud.delete_review()
-        Crud.update_anime()
-        print(Color.GREEN + "All methods in Crud executed successfully." + Color.END)
+        Crud.get_anime_count()
+
+
+    def get_total_watched(self):
+        print("-------------------------------------")
+        Crud.get_total_watched_anime_count()
+
+    
+    def get_genre_list(self):
+        print("-------------------------------------")
+        Crud.get_genre_counts()
+
+    
+    def get_top_rated_Animes(self):
+        Crud.get_top_rated_anime()
+
+    
+    def get_average_rating_for_an_anime(self):
+        Crud.get_average_rating_for_anime()
+
+    
+    def anime_by_genre(self):
+        Crud.get_anime_by_genre()
+
+    
+    def watch_status(self):
+        Crud.get_anime_watched_status_count()
+
+
+    # def run_all_methods_in_crud(self):
+    #     print("-------------------------------------")
+    #     # Run all methods in the Crud class
+    #     Crud.get_all()
+    #     Crud.get_anime_details()
+    #     Crud.add_anime()
+    #     Crud.delete_anime()
+    #     Crud.add_review()
+    #     Crud.delete_review()
+    #     Crud.update_anime()
+    #     Styles.success("All methods in Crud executed successfully.")
 
 
     def exit_program(self):
@@ -100,14 +137,30 @@ class CLI:
             elif choice == "4":
                 self.delete_anime()
             elif choice == "5":
-                self.add_review()
+                self.add_user()
             elif choice == "6":
-                self.delete_review()
+                self.delete_user()
             elif choice == "7":
-                self.update_anime()
+                self.add_review()
             elif choice == "8":
-                self.run_all_methods_in_crud()
+                self.delete_review()
             elif choice == "9":
+                self.update_anime()
+            elif choice == "10":
+                self.get_anime_count()
+            elif choice == "11":
+                self.get_total_watched()
+            elif choice == "12":
+                self.get_genre_list()
+            elif choice == "13":
+                self.get_top_rated_Animes()
+            elif choice == "14":
+                self.get_average_rating_for_an_anime()
+            elif choice == "15":
+                self.anime_by_genre()
+            elif choice == "16":
+                self.watch_status()
+            elif choice == "17":
                 self.exit_program()
                 break
             else:
